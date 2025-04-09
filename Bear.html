@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>可以给我买熊吗？</title>
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: '微软雅黑', sans-serif;
+}
+
+.container {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 30px 50px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  width: 100%;  /* 宽度设置为100% */
+  height: 100%;  /* 高度设置为100% */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+img {
+  width: 200px;
+  margin-bottom: 20px;
+  transition: transform 0.3s;
+}
+
+h1 {
+  color: #ff6b6b;
+  margin: 0 0 20px 0;
+  font-size: 2.5em;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.buttons {
+  display: flex;
+  gap: 40px;  /* 初始间距加大 */
+  justify-content: center;
+  transition: gap 0.3s;  /* 添加间距过渡动画 */
+}
+
+button {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#buyBtn {
+  background: #ff6b6b;
+  color: white;
+}
+
+#buyBtn:hover {
+  background: #ff5252;
+  transform: scale(1.05);
+}
+
+#refuseBtn {
+  background: #e0e0e0;
+  color: #666;
+}
+
+#refuseBtn:hover {
+  background: #d0d0d0;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <img src="bear.webp" alt="小熊">
+  <h1>可以给我买熊吗？</h1>
+  <div class="buttons">
+    <button id="buyBtn" onclick="buyBear()">给我买吧买吧给我买熊吧！</button>
+    <button id="refuseBtn" onclick="handleRefuse()">不干</button>
+  </div>
+</div>
+
+<script>
+let refuseState = 0;
+let buyScale = 1;
+const buttons = document.querySelector('.buttons');
+
+function handleRefuse() {
+    const refuseBtn = document.getElementById('refuseBtn');
+    const buyBtn = document.getElementById('buyBtn');
+    
+    refuseState++;
+    
+    switch(refuseState) {
+        case 1:
+            refuseBtn.textContent = "你算老几？";
+            buyScale *= 1.2;
+            break;
+        case 2:
+            refuseBtn.textContent = "死远一点。";
+            buyScale *= 1.2;
+            break;
+        case 3:
+            refuseBtn.textContent = "滚！";
+            buyBtn.textContent = "给我买！";
+            buyScale *= 1.2;
+            break;
+        default:
+            buyScale *= 1.2;
+            // 每次点击增加按钮间距
+            buttons.style.gap = `${40 + (refuseState - 2) * 15}px`;
+            if(buyScale > 20) {
+                refuseBtn.style.display = 'none';
+            }
+    }
+    
+    buyBtn.style.transform = `scale(${buyScale})`;
+}
+
+function buyBear() {
+    alert("太好了！谢谢你！小熊会超级开心的！ 🐻");
+    location.reload();
+}
+</script>
+</body>
+</html>
